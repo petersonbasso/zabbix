@@ -1,4 +1,28 @@
 #!/bin/bash
+#
+# versao 1.0
+#
+# NOME
+#   descobre_ruckus.sh
+#
+# DESCRICAO
+#   Esse script utiliza consultas SNMP ao controller Ruckus para gerar um JSON no Padrão Zabbix, que será utilizado  
+# em uma regra LLD para descoberta de APs conectados ao Controller, ao final da execução é devolvido um JSON contendo duas 
+# Macros {#NOMEAP} e {#OID} que contém respectivamente o nome do AP e o indice correpondente para consultas de quantidade
+# de clientes conectados.
+#
+# NOTA
+#   Esse script gera dois arquivos temporários que são sobrescritos a cada execução /tmp/ruckus.tmp e /tmp/ruckus.json 
+#   Esse script deve ser utilizado em conjunto com o template Ruckus, ele deve ser inserido na pasta /usr/lib/zabbix/externalscripts/
+# concedido permissão para execução, alterado dono para usuário zabbix.
+#
+# AUTOR
+#   Peterson Basso
+#
+# MODIFICADO_POR  (DD/MM/YYYY)
+#   Peterson Basso     21/02/2017 - Primeira versao.
+#
+
 
 ips_ap=($(snmpwalk -v2c -c COMM_PROC 10.212.248.3 1.3.6.1.4.1.25053.1.2.2.4.1.1.1.1.16 2> /dev/null | cut -d" " -f 4))
 
